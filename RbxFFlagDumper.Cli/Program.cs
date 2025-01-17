@@ -54,7 +54,7 @@ namespace RbxFFlagDumper.Cli
 
             string extraContentPath = Path.Combine(studioPath, "ExtraContent");
 
-            if (!Directory.Exists(exePath))
+            if (!Directory.Exists(extraContentPath))
             {
                 Console.WriteLine("Could not find ExtraContent folder");
                 return;
