@@ -1,10 +1,10 @@
-﻿using System;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.IO.Compression;
-
-using RbxFFlagDumper.Lib.Exceptions;
+﻿using System.Diagnostics;
 using System.Globalization;
+using System.IO.Compression;
+using System.Text.RegularExpressions;
+
+using RbxFFlagDumper.Lib;
+using RbxFFlagDumper.Lib.Exceptions;
 
 namespace RbxFFlagDumper.Test
 {
@@ -66,7 +66,11 @@ namespace RbxFFlagDumper.Test
 
                 try
                 {
-                    var flags = Lib.StudioFFlagDumper.DumpCppFlags(exePath);
+                    var timer = new Stopwatch();
+                    timer.Start();
+                    var flags = StudioFFlagDumper.DumpCppFlags(exePath);
+                    timer.Stop();
+
                     File.WriteAllText(dmpPath, String.Join('\n', flags));
 
                     if (!String.IsNullOrEmpty(nextVersionGuid))
@@ -91,7 +95,7 @@ namespace RbxFFlagDumper.Test
                         File.WriteAllText(diffPath, String.Join("\n", diff));
                     }
 
-                    Console.WriteLine($"\tDone (dumped {flags.Count} flags)");
+                    Console.WriteLine($"\tDone (dumped {flags.Count} flags in {timer.Elapsed})");
 
                     nextCanonDate = canonDate;
                     nextDump = flags;

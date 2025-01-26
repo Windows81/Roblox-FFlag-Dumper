@@ -23,25 +23,17 @@ namespace RbxFFlagDumper.Lib
         /// </exception>
         public static List<string> DumpAllFlags(string studioPath)
         {
+            var list = new List<string>();
+
             var cppFlags = DumpCppFlags(Path.Combine(studioPath, "RobloxStudioBeta.exe"));
             var luaFlags = DumpLuaFlags(Path.Combine(studioPath, "ExtraContent"));
-            
-            var combinedList = new List<string>();
-            var finalList = new List<string>();
+            var commonFlags = cppFlags.Intersect(luaFlags);
 
-            combinedList.AddRange(cppFlags);
-            combinedList.AddRange(luaFlags);
-            combinedList.Sort();
+            list.AddRange(cppFlags.Where(x => !commonFlags.Contains(x)).Select(x => "[C++] " + x));
+            list.AddRange(luaFlags.Where(x => !commonFlags.Contains(x)).Select(x => "[Lua] " + x));
+            list.AddRange(commonFlags.Select(x => "[Com] " + x));
 
-            foreach (string flag in combinedList)
-            {
-                if (cppFlags.Contains(flag))
-                    finalList.Add($"[C++] {flag}");
-                else
-                    finalList.Add($"[Lua] {flag}");
-            }
-
-            return finalList;
+            return list.OrderBy(x => x.Substring(6)).ToList();
         }
 
         /// <summary>
