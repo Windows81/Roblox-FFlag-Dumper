@@ -1,6 +1,6 @@
 # rbxfflagdumper
 
-.NET suite for statically analysing and dumping Roblox engine FastFlags
+.NET suite for statically dumping Roblox engine FastFlags, used in [Roblox Client Tracker](https://github.com/MaximumADHD/Roblox-Client-Tracker/)
 
 ## RbxFFlagDumper.Lib
 
@@ -11,6 +11,8 @@ List<String> flags = StudioFFlagDumper.DumpAllFlags("versions\\version-xxxxxxxxx
 File.WriteAllText("fflags.txt", String.Join('\n', flags));
 ```
 
+Flags prefixed with `[Com]` indicate those common between both C++ and Lua
+
 ## RbxFFlagDumper.Cli
 
 Basic command line tool for dumping from a directory containing Roblox Studio
@@ -19,6 +21,8 @@ Basic command line tool for dumping from a directory containing Roblox Studio
 Usage: RbxFFlagDumper.Cli.exe [cpp|lua|all] [path to studio folder]
 ```
 
-## Libraries
+## License
 
-Uses [PeNet](https://github.com/secana/PeNet) for aid in static analysis
+Licensed under the MIT license. Feel free to use however.
+
+Uses [PeNet](https://github.com/secana/PeNet).
