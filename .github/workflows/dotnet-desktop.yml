@@ -28,6 +28,9 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
       
+    - name: Restore NuGet packages
+      run: dotnet restore
+      
     - name: Create the app package
       run: msbuild . /p:Configuration=$env:Configuration
       env:
