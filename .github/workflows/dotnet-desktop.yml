@@ -24,6 +24,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        cache: true
 
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
@@ -42,9 +43,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
         
     - name: Set current datetime
-      id: set_datetime
-      run: |
-        echo "RELEASE_DATETIME=$(date +%Y%m%dT%H%MZ)" >> $GITHUB_ENV
+      run: Add-Content -Path $env:GITHUB_ENV -Value "RELEASE_DATETIME=$(date.exe +%Y%m%dT%H%MZ)"
 
     - name: Create release
       uses: softprops/action-gh-release@v2
