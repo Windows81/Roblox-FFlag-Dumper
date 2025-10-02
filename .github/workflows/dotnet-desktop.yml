@@ -37,7 +37,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
       
     - name: Copy EXE files
-      run: mkdir ./bin && cp ./*/bin/${{ matrix.configuration }}/*.exe ./bin && rename 's/(.*)$/${{ matrix.configuration }}.$1/' ./bin/*
+      run: mkdir ./bin && ls ./*/bin/${{ matrix.configuration }}/*.exe |% {mv $_ ./bin/($_.BaseName)-${{ matrix.configuration }}.exe}
       env:
         Configuration: ${{ matrix.configuration }}
         
