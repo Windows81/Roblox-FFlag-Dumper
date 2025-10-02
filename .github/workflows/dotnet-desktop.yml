@@ -37,7 +37,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
       
     - name: Copy EXE files
-      run: mkdir ./bin && ls "./*/bin/${{ matrix.configuration }}/*.exe" |% {mv ($_.FullName) "./bin/$($_.BaseName)-${{ matrix.configuration }}.exe"}
+      run: mkdir ./bin && ls "./*/bin/${{ matrix.configuration }}/" |% {mv ($_.FullName) "./bin/$($_.BaseName).${{ matrix.configuration }}.exe"}
       env:
         Configuration: ${{ matrix.configuration }}
         
@@ -48,7 +48,7 @@ jobs:
     - name: Create release
       uses: softprops/action-gh-release@v2
       with:
-        files: ./bin/*.exe
+        files: ./bin/*
         name: ${{ env.RELEASE_DATETIME }}
         tag_name: ${{ env.RELEASE_DATETIME }}
         generate_release_notes: true
