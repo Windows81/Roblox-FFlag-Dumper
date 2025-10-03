@@ -15,6 +15,10 @@ jobs:
         configuration: [Debug, Release]
 
     steps:
+    - name: Get current datetime
+      run: echo "RELEASE_DATETIME=$(date +%Y%m%dT%H%MZ)" >> $GITHUB_ENV
+      shell: bash
+      
     - name: Checkout
       uses: actions/checkout@v4
       with:
@@ -40,10 +44,6 @@ jobs:
       run: mkdir ./bin && ls "./*/bin/${{ matrix.configuration }}/*" |% {mv ($_.FullName) "./bin/$($_.BaseName).${{ matrix.configuration }}.$($_.Extension)"}
       env:
         Configuration: ${{ matrix.configuration }}
-        
-    - name: Set current datetime
-      run: echo "RELEASE_DATETIME=$(date +%Y%m%dT%H%MZ)" >> $GITHUB_ENV
-      shell: bash
 
     - name: Create release
       uses: softprops/action-gh-release@v2
