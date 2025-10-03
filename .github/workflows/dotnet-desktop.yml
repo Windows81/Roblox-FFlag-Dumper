@@ -41,7 +41,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
       
     - name: Copy EXE files
-      run: mkdir ./bin && ls "./*/bin/${{ matrix.configuration }}/*" |% {mv ($_.FullName) "./bin/$($_.BaseName).${{ matrix.configuration }}.$($_.Extension)"}
+      run: mkdir ./bin && ls "./*/bin/${{ matrix.configuration }}/Rbx*" |% {mv ($_.FullName) "./bin/$($_.BaseName).${{ matrix.configuration }}.$($_.Extension)"}
       env:
         Configuration: ${{ matrix.configuration }}
 
